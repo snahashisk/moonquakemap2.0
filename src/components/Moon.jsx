@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { Stars } from "@react-three/drei";
@@ -7,7 +7,7 @@ import moonColor from "../assets/img/moon-texture.jpg";
 import moonBump from "../assets/img/moon-displacement.jpg";
 import * as THREE from "three";
 
-const Moon = () => {
+const Moon = ({ latitude, longitude }) => {
   const [mooncolormap, moonbumpmap] = useLoader(TextureLoader, [
     moonColor,
     moonBump,
@@ -39,9 +39,18 @@ const Moon = () => {
       rotation: [rotation.x, rotation.y, rotation.z],
     };
   };
+  const [ringPosition, setRingPosition] = useState([0, 0, 0]);
+  const [ringRotation, setRingRotation] = useState([0, 0, 0]);
 
-  const { position: ringPosition, rotation: ringRotation } =
-    calculatePositionAndOrientation(10, 10, 0.9);
+  useEffect(() => {
+    const { position, rotation } = calculatePositionAndOrientation(
+      latitude,
+      longitude,
+      0.9
+    );
+    setRingPosition(position);
+    setRingRotation(rotation);
+  }, [latitude, longitude]);
 
   return (
     <>
@@ -78,7 +87,7 @@ const Moon = () => {
         <torusGeometry args={[0.064, 0.001, 32, 32]} />
         <meshBasicMaterial color="red" side={THREE.DoubleSide} />
       </mesh>
-
+      <OrbitControls enableZoom={false} enablePan={false} />
       <Stars
         radius={300}
         depth={60}

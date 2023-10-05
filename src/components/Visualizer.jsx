@@ -22,15 +22,28 @@ const Visualizer = () => {
 
   return (
     <>
-      <div className="relative h-1/2 w-1/2">
+      <div className="absolute z-10 mt-10 ml-10 h-1/2 w-1/3">
+        <h1 className="text-white text-4xl font-semibold">
+          Moon Quake <span className="text-amber-400">Visualizer</span>
+        </h1>
+        <p className="text-white text-sm mt-2">
+          Explore the seismic activity on the Moon by selecting specific dates
+          from the dropdown menu. This visualizer renders a 3D model of the
+          Moon, highlighting the locations of moonquakes. Use the dropdown to
+          navigate through various recorded quake incidents, visualizing their
+          locations on the lunar surface. Upon selecting a date, the camera
+          navigates to the quake's latitude and longitude, providing a spatial
+          view of the incident.
+        </p>
+
         <button
-          className="bg-gray-300 p-2 rounded-md w-40"
+          className="bg-gray-300 p-2 rounded-md w-40 mt-6"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           Select Date
         </button>
         {isDropdownOpen && (
-          <div className="absolute top-10 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-scroll h-full">
+          <div className="relative top-0 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-scroll h-full w-2/5">
             {quakeData.map((quake, index) => (
               <div
                 key={index}
@@ -62,7 +75,6 @@ const CameraController = ({ position }) => {
   const { camera, gl } = useThree();
   useEffect(() => {
     if (camera) {
-      console.log("Updating camera position to: ", position);
       camera.position.set(position[0], position[1], position[2]);
       camera.lookAt(0, 0, 0);
     }

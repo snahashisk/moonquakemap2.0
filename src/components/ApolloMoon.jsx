@@ -131,7 +131,6 @@ function ApolloModel({ name, latitude, longitude, model, updateInfo }) {
       position={[x, y, z]}
       quaternion={orientation}
       onPointerDown={() => {
-        console.log(name);
         updateInfo(name);
       }}
     >

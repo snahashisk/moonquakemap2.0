@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useFrame } from "@react-three/fiber";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { Stars } from "@react-three/drei";
@@ -13,7 +14,7 @@ const Moon = ({ latitude, longitude }) => {
     moonBump,
   ]);
   const moonRef = useRef();
-  const ringRef = useRef();
+  // const ringRef = useRef();
 
   const calculatePositionAndOrientation = (latitude, longitude, radius) => {
     const latRad = (latitude * Math.PI) / 180;
@@ -52,6 +53,32 @@ const Moon = ({ latitude, longitude }) => {
     setRingRotation(rotation);
   }, [latitude, longitude]);
 
+  const Ring = ({ position, rotation, args }) => {
+    const meshRef = useRef();
+    const [scale, setScale] = useState(1);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setScale((prev) => (prev === 1 ? 1.2 : 1));
+      }, 500);
+
+      return () => clearInterval(interval);
+    }, []);
+
+    useFrame(({ clock }) => {
+      if (meshRef.current) {
+        meshRef.current.rotation.z = clock.getElapsedTime();
+        meshRef.current.scale.set(scale, scale, scale);
+      }
+    });
+
+    return (
+      <mesh ref={meshRef} position={position} rotation={rotation}>
+        <torusGeometry args={args} />
+        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
+      </mesh>
+    );
+  };
+
   return (
     <>
       <ambientLight intensity={0.6} />
@@ -67,26 +94,14 @@ const Moon = ({ latitude, longitude }) => {
         />
       </mesh>
 
-      <mesh ref={ringRef} position={ringPosition} rotation={ringRotation}>
-        <torusGeometry args={[0.01, 0.005, 32, 32]} />
-        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
-      </mesh>
-      <mesh ref={ringRef} position={ringPosition} rotation={ringRotation}>
-        <torusGeometry args={[0.025, 0.004, 32, 32]} />
-        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
-      </mesh>
-      <mesh ref={ringRef} position={ringPosition} rotation={ringRotation}>
-        <torusGeometry args={[0.04, 0.003, 32, 32]} />
-        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
-      </mesh>
-      <mesh ref={ringRef} position={ringPosition} rotation={ringRotation}>
-        <torusGeometry args={[0.054, 0.002, 32, 32]} />
-        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
-      </mesh>
-      <mesh ref={ringRef} position={ringPosition} rotation={ringRotation}>
-        <torusGeometry args={[0.064, 0.001, 32, 32]} />
-        <meshBasicMaterial color="red" side={THREE.DoubleSide} />
-      </mesh>
+      {[0.01, 0.025, 0.04, 0.054, 0.064].map((size, index) => (
+        <Ring
+          key={index}
+          position={ringPosition}
+          rotation={ringRotation}
+          args={[size, 0.005 - index * 0.001, 32, 32]}
+        />
+      ))}
       <OrbitControls enableZoom={false} enablePan={false} />
       <Stars
         radius={300}

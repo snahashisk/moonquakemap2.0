@@ -7,17 +7,13 @@ import Visualizer from "./components/Visualizer";
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const goToApolloSection = () => setCurrentSection(1);
-  useEffect(() => {
-    const sections = [Homepage, Apollo, Visualizer].map((Component, index) => (
-      <div key={index} id={`section-${index}`} className="full-page-section">
-        <Component />
-      </div>
-    ));
 
+  useEffect(() => {
     const handleScroll = (e) => {
       e.preventDefault();
       const newSection = currentSection + (e.deltaY > 0 ? 1 : -1);
-      if (newSection >= 0 && newSection < sections.length) {
+      if (newSection >= 0 && newSection < 3) {
+        // 3: Total Number of Sections
         setCurrentSection(newSection);
       }
     };
@@ -31,23 +27,20 @@ function App() {
 
   useEffect(() => {
     const targetSection = document.getElementById(`section-${currentSection}`);
-    if (targetSection) {
-      window.scrollTo({
-        top: targetSection.offsetTop,
-        behavior: "smooth",
-      });
-    }
+    targetSection?.scrollIntoView({ behavior: "smooth" });
   }, [currentSection]);
 
-  const sections = [Homepage, Apollo, Visualizer].map((Component, index) => (
-    <div key={index} id={`section-${index}`} className="full-page-section">
-      <Component
-        goToApolloSection={index === 0 ? goToApolloSection : undefined}
-      />
-    </div>
-  ));
-
-  return <>{sections}</>;
+  return (
+    <>
+      {[Homepage, Apollo, Visualizer].map((Component, index) => (
+        <div key={index} id={`section-${index}`} className="full-page-section">
+          <Component
+            goToApolloSection={index === 0 ? goToApolloSection : undefined}
+          />
+        </div>
+      ))}
+    </>
+  );
 }
 
 export default App;

@@ -8,6 +8,14 @@ const Visualizer = () => {
   const [targetLongitude, setTargetLongitude] = useState(10);
   const [cameraPosition, setCameraPosition] = useState([0, 0, 2]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedQuake, setSelectedQuake] = useState(quakeData[0]);
+
+  useEffect(() => {
+    if (selectedQuake) {
+      setTargetLatitude(selectedQuake.Lat);
+      setTargetLongitude(selectedQuake.Long);
+    }
+  }, [selectedQuake]);
 
   useEffect(() => {
     const radius = 2;
@@ -43,7 +51,7 @@ const Visualizer = () => {
           Select Date
         </button>
         {isDropdownOpen && (
-          <div className="relative top-0 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-scroll h-full w-2/5">
+          <div className="z-10 relative top-0 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-auto h-full w-2/5">
             {quakeData.map((quake, index) => (
               <div
                 key={index}
@@ -52,6 +60,7 @@ const Visualizer = () => {
                   setIsDropdownOpen(!isDropdownOpen);
                   setTargetLatitude(quake.Lat);
                   setTargetLongitude(quake.Long);
+                  setSelectedQuake(quake);
                 }}
               >
                 <h2 className="flex">Year: {quake.Year}</h2>
@@ -59,6 +68,24 @@ const Visualizer = () => {
               </div>
             ))}
           </div>
+        )}
+      </div>
+      <div className="absolute right-0 z-10 p-6 w-1/5 h-full flex flex-col justify-end text-white gap-4">
+        <h3 className="text-white text-3xl font-semibold">
+          Quake <span className="text-amber-500">Details</span>
+        </h3>
+        {selectedQuake ? (
+          <div className="text-lg flex flex-col gap-2">
+            <p>
+              <span>Year:</span> {selectedQuake.Year}
+            </p>
+            <p>Day: {selectedQuake.Day}</p>
+            <p>Latitude: {selectedQuake.Lat}</p>
+            <p>Longitude: {selectedQuake.Long}</p>
+            <p>Magnitude: {selectedQuake.Magnitude}</p>
+          </div>
+        ) : (
+          <p className="text-white">No quake selected</p>
         )}
       </div>
       <Canvas>

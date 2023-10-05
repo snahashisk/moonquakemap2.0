@@ -3,7 +3,6 @@ import React, { Suspense } from "react";
 import ApolloMoon from "./ApolloMoon";
 import LanderInfo from "./LanderInfo";
 import { useState } from "react";
-
 const Apollo = () => {
   const [info, setInfo] = useState("Apollo 11");
   const updateInfo = (newInfo) => {

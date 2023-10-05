@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { Stars } from "@react-three/drei";
@@ -64,8 +64,6 @@ const ApolloMoon = ({ updateInfo }) => {
     const angularSpeed = 1;
     const newY = radius * Math.cos(angularSpeed * state.clock.elapsedTime);
     const newZ = radius * Math.sin(angularSpeed * state.clock.elapsedTime);
-
-    // Set the new position for the point light
     pointRef.current.position.set(2, newY, newZ);
   });
 
@@ -109,7 +107,6 @@ const ApolloMoon = ({ updateInfo }) => {
 export default ApolloMoon;
 
 function ApolloModel({ name, latitude, longitude, model, updateInfo }) {
-  const modelRef = useRef();
   const radius = 1.005;
   const phi = (90 - latitude) * (Math.PI / 180);
   const theta = (longitude + 180) * (Math.PI / 180);
@@ -123,7 +120,12 @@ function ApolloModel({ name, latitude, longitude, model, updateInfo }) {
     upVector,
     normalVector
   );
-
+  const clonedModel = model.scene.clone();
+  clonedModel.traverse((child) => {
+    if (child.isMesh) {
+      child.material = new THREE.MeshStandardMaterial({ color: 0xffd700 });
+    }
+  });
   return (
     <group
       position={[x, y, z]}
@@ -133,7 +135,7 @@ function ApolloModel({ name, latitude, longitude, model, updateInfo }) {
         updateInfo(name);
       }}
     >
-      <primitive object={model.scene.clone()} scale={0.012} castShadow />
+      <primitive object={clonedModel} scale={0.012} castShadow />
       <Html>
         <div
           className="text-center cursor-pointer bg-black text-white font-medium mt-4 text-sm rounded-md h-8 p-1 border-solid border-2 border-yellow-500"

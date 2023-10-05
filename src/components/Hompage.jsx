@@ -3,10 +3,10 @@ import { Canvas } from "@react-three/fiber";
 
 import HomeMoon from "./HomeMoon";
 
-const Hompage = () => {
+const Hompage = ({ goToApolloSection }) => {
   return (
     <>
-      <div className="absolute right-0 w-2/4 h-full text-center text-white flex flex-col gap-4 items-center justify-center bg-grey-400">
+      <div className="absolute right-0 w-2/4 h-full text-center text-white flex flex-col gap-4 items-center justify-center bg-grey-400 z-10">
         <h1 className="text-white font-bold text-6xl">
           MOONQUAKE MAP <span className="text-yellow-400">2.0</span>
         </h1>
@@ -27,7 +27,10 @@ const Hompage = () => {
           Explorer 2.0 is your gateway to unlocking the lunar secrets hidden
           beneath the Moon's surface. Start your lunar exploration today!
         </p>
-        <p className="bg-yellow-400 py-2 rounded-md px-2 text-black">
+        <p
+          className="bg-yellow-400 text-xl py-2 border-black rounded-lg ease-out duration-300 px-4 text-black cursor-pointer border-4 border-solid hover:border-yellow-400 hover:bg-black hover:text-white flex justify-center items-center"
+          onClick={goToApolloSection}
+        >
           Explore More
         </p>
       </div>

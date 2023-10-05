@@ -73,7 +73,7 @@ const LanderInfo = (props) => {
   const matchedInfo = allInfo.find((info) => info.name === props.name);
 
   return (
-    <div className="text-white absolute mt-10 ml-10 w-1/4">
+    <div className="text-white absolute mt-10 ml-10 w-1/4 z-10">
       <div className="flex flex-col gap-8">
         <h2 className="text-5xl font-semibold text-yellow-400 leading-sung">
           Lunar Module Information

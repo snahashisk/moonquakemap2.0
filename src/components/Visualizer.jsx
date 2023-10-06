@@ -27,7 +27,8 @@ const Visualizer = () => {
 
     setCameraPosition([x, y, z]);
   }, [targetLatitude, targetLongitude]);
-
+  const [areLabelsVisible, setAreLabelsVisible] = useState(true);
+  const [useHeightMap, setUseHeightMap] = useState(false);
   return (
     <>
       <div className="absolute z-10 mt-10 ml-10 h-1/2 w-1/3">
@@ -45,10 +46,22 @@ const Visualizer = () => {
         </p>
 
         <button
-          className="bg-gray-300 p-2 rounded-md w-40 mt-6"
+          className="bg-gray-300 p-2 rounded-md mt-6"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           Select Date
+        </button>
+        <button
+          className="bg-gray-300 p-2 rounded-md mt-6 ml-4"
+          onClick={() => setAreLabelsVisible(!areLabelsVisible)}
+        >
+          Ocean & Seas
+        </button>
+        <button
+          className="bg-gray-300 p-2 rounded-md  ml-4 mt-6"
+          onClick={() => setUseHeightMap(!useHeightMap)} // Update this line
+        >
+          Height Map
         </button>
         {isDropdownOpen && (
           <div className="z-10 relative top-0 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-auto h-full w-2/5">
@@ -91,7 +104,12 @@ const Visualizer = () => {
       <Canvas>
         <CameraController position={cameraPosition} />
         <Suspense fallback={null}>
-          <Moon latitude={targetLatitude} longitude={targetLongitude} />
+          <Moon
+            latitude={targetLatitude}
+            longitude={targetLongitude}
+            areLabelsVisible={areLabelsVisible}
+            useHeightMap={useHeightMap}
+          />
         </Suspense>
       </Canvas>
     </>

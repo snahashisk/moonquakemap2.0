@@ -9,6 +9,7 @@ const Visualizer = () => {
   const [cameraPosition, setCameraPosition] = useState([0, 0, 2]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedQuake, setSelectedQuake] = useState(quakeData[0]);
+  const [isWireframeVisible, setIsWireframeVisible] = useState(false);
 
   useEffect(() => {
     if (selectedQuake) {
@@ -44,25 +45,33 @@ const Visualizer = () => {
           navigates to the quake's latitude and longitude, providing a spatial
           view of the incident.
         </p>
+        <div className="grid grid-cols-2 gap-4 w-2/3">
+          <button
+            className="bg-gray-300 p-2 rounded-md mt-6"
+            onClick={() => setAreLabelsVisible(!areLabelsVisible)}
+          >
+            Ocean & Seas
+          </button>
+          <button
+            className="bg-gray-300 p-2 rounded-md mt-6"
+            onClick={() => setUseHeightMap(!useHeightMap)}
+          >
+            Height Map
+          </button>
+          <button
+            className="bg-gray-300 p-2 rounded-md"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            Select Date
+          </button>
+          <button
+            className="bg-gray-300 p-2 rounded-md"
+            onClick={() => setIsWireframeVisible(!isWireframeVisible)}
+          >
+            Toggle Wireframe
+          </button>
+        </div>
 
-        <button
-          className="bg-gray-300 p-2 rounded-md mt-6"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        >
-          Select Date
-        </button>
-        <button
-          className="bg-gray-300 p-2 rounded-md mt-6 ml-4"
-          onClick={() => setAreLabelsVisible(!areLabelsVisible)}
-        >
-          Ocean & Seas
-        </button>
-        <button
-          className="bg-gray-300 p-2 rounded-md  ml-4 mt-6"
-          onClick={() => setUseHeightMap(!useHeightMap)} // Update this line
-        >
-          Height Map
-        </button>
         {isDropdownOpen && (
           <div className="z-10 relative top-0 left-0 bg-white border border-gray-300 rounded-md mt-2 overflow-y-auto h-full w-2/5">
             {quakeData.map((quake, index) => (
@@ -109,6 +118,7 @@ const Visualizer = () => {
             longitude={targetLongitude}
             areLabelsVisible={areLabelsVisible}
             useHeightMap={useHeightMap}
+            isWireframeVisible={isWireframeVisible}
           />
         </Suspense>
       </Canvas>

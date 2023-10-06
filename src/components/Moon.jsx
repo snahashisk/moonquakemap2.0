@@ -9,15 +9,21 @@ import moonBump from "../assets/img/moon-displacement.jpg";
 import moonHeight from "../assets/img/moon-height.jpg";
 import * as THREE from "three";
 import MoonLabel from "./MoonLabel";
+import Wireframe from "./Wirframe";
 
-const Moon = ({ latitude, longitude, areLabelsVisible, useHeightMap }) => {
+const Moon = ({
+  latitude,
+  longitude,
+  areLabelsVisible,
+  useHeightMap,
+  isWireframeVisible,
+}) => {
   const [mooncolormap, moonbumpmap, MoonHeightMap] = useLoader(TextureLoader, [
     moonColor,
     moonBump,
     moonHeight,
   ]);
   const moonRef = useRef();
-  // const ringRef = useRef();
 
   const calculatePositionAndOrientation = (latitude, longitude, radius) => {
     const latRad = (latitude * Math.PI) / 180;
@@ -136,6 +142,7 @@ const Moon = ({ latitude, longitude, areLabelsVisible, useHeightMap }) => {
           args={[size, 0.005 - index * 0.001, 32, 32]}
         />
       ))}
+      {isWireframeVisible && <Wireframe />}
       <OrbitControls enableZoom={false} enablePan={false} />
       <Stars
         radius={300}

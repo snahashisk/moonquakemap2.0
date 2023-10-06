@@ -79,11 +79,11 @@ const LanderInfo = (props) => {
           Lunar Module Information
         </h2>
         <p className="leading-sung text-gray-200">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis, et
-          sequi temporibus iusto ipsa dolorem. Voluptas est ex saepe! Illo ut
-          nobis non suscipit ab assumenda vero aliquam ea quaerat natus neque
-          consequuntur amet eaque laborum minima libero earum aspernatur in, quo
-          provident, sapiente unde autem! Doloribus itaque dolor atque!
+          NASA's Apollo missions, beyond lunar landings, pioneered in deploying
+          seismometers, unraveling mysteries of moonquakes. The Apollo Passive
+          Seismic Experiment detected seismic activities, revealing crucial data
+          about the Moon's internal structure, thereby advancing our
+          understanding of its geological mechanisms and formation.
         </p>
       </div>
       <div className="mt-10 text-md flex flex-col gap-2 text-lg text-gray-200">

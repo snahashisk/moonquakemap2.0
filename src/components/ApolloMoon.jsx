@@ -43,11 +43,6 @@ const ApolloMoon = ({ updateInfo }) => {
       latitude: 20.1911,
       longitude: 30.7723,
     },
-    {
-      name: "Chandrayaan-3",
-      latitude: 69.373,
-      longitude: 32.319,
-    },
   ];
 
   const [apolloModel] = useLoader(GLTFLoader, [apolloGlb]);

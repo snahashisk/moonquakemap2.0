@@ -47,25 +47,33 @@ const Visualizer = () => {
         </p>
         <div className="grid grid-cols-2 gap-4 w-2/3">
           <button
-            className="bg-gray-300 p-2 rounded-md mt-6"
+            className={`p-2 rounded-md mt-6 outline-none duration-400 ${
+              areLabelsVisible ? "bg-blue-600 text-white" : "bg-yellow-400"
+            }`}
             onClick={() => setAreLabelsVisible(!areLabelsVisible)}
           >
             Ocean & Seas
           </button>
           <button
-            className="bg-gray-300 p-2 rounded-md mt-6"
+            className={`p-2 rounded-md mt-6 outline-none duration-400 ${
+              useHeightMap ? "bg-blue-600 text-white" : "bg-yellow-400"
+            }`}
             onClick={() => setUseHeightMap(!useHeightMap)}
           >
             Height Map
           </button>
           <button
-            className="bg-gray-300 p-2 rounded-md"
+            className={`p-2 rounded-md outline-none duration-400 ${
+              isDropdownOpen ? "bg-blue-600 text-white" : "bg-yellow-400"
+            }`}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             Select Date
           </button>
           <button
-            className="bg-gray-300 p-2 rounded-md"
+            className={`p-2 rounded-md outline-none duration-400 ${
+              isWireframeVisible ? "bg-blue-600 text-white" : "bg-yellow-400"
+            }`}
             onClick={() => setIsWireframeVisible(!isWireframeVisible)}
           >
             Toggle Wireframe

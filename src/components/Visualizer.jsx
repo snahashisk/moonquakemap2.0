@@ -2,6 +2,7 @@ import React, { Suspense, useState, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import Moon from "./Moon";
 import { quakeData } from "./quakeData";
+import hightScale from "../assets/img/height.png";
 
 const Visualizer = () => {
   const [targetLatitude, setTargetLatitude] = useState(10);
@@ -99,7 +100,19 @@ const Visualizer = () => {
             ))}
           </div>
         )}
+        <div
+          className={`relative mt-16 text-white ${
+            useHeightMap ? "visible" : "invisible"
+          }`}
+        >
+          <img src={hightScale} alt="it is a height scale" className="w-2/3" />
+          <div className={`flex justify-between w-2/3 text-md mt-1`}>
+            <p>-1000</p>
+            <p>1000</p>
+          </div>
+        </div>
       </div>
+
       <div className="absolute right-0 z-10 p-6 w-1/5 h-full flex flex-col justify-end text-white gap-4">
         <h3 className="text-white text-3xl font-semibold">
           Quake <span className="text-amber-500">Details</span>

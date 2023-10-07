@@ -13,7 +13,6 @@ function App() {
       e.preventDefault();
       const newSection = currentSection + (e.deltaY > 0 ? 1 : -1);
       if (newSection >= 0 && newSection < 3) {
-        // 3: Total Number of Sections
         setCurrentSection(newSection);
       }
     };
